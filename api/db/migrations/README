@@ -1,0 +1,14 @@
+# filepath: /Users/republicalatuya/Desktop/LyoBackendNew/api/db/migrations/README
+Generic multi-database migration environment for Alembic.
+
+This is an Alembic environment configured for the SQLAlchemy models used in the Lyo backend.
+The environment should be used to generate and run database migrations.
+
+Usage:
+- Generate a new migration: alembic revision --autogenerate -m "Description"
+- Apply migrations: alembic upgrade head
+- Rollback migrations: alembic downgrade -1
+- Check current version: alembic current
+
+For more information on Alembic, see:
+https://alembic.sqlalchemy.org/en/latest/

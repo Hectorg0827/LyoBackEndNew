@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.test
+    environment:
+      - POSTGRES_USER=test_user
+      - POSTGRES_PASSWORD=test_password
+      - POSTGRES_DB=test_db
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - FIRESTORE_PROJECT_ID=test-project
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/test-service-account.json
+      - ENVIRONMENT=test
+    volumes:
+      - ./credentials:/app/credentials
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=test_user
+      - POSTGRES_PASSWORD=test_password
+      - POSTGRES_DB=test_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_test_data:/data
+      
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    env_file:
+      - .env.test
+    environment:
+      - POSTGRES_USER=test_user
+      - POSTGRES_PASSWORD=test_password
+      - POSTGRES_DB=test_db
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - FIRESTORE_PROJECT_ID=test-project
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/test-service-account.json
+      - ENVIRONMENT=test
+    volumes:
+      - ./:/app
+      - ./credentials:/app/credentials
+    depends_on:
+      - postgres
+      - redis
+    command: ["pytest", "-xvs"]
+
+volumes:
+  postgres_test_data:
+  redis_test_data:

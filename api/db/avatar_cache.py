@@ -1,5 +1,4 @@
-""" caching helpers for Avatar context and conversation.
-"""
+"""Caching helpers for avatar context and conversation."""
 import logging
 import time
 import asyncio

@@ -12,6 +12,8 @@ A production-ready, modular monolith backend for Lyo, an AI-powered multilingual
 - **Real-time Capabilities**: WebSocket support for instant notifications
 - **Comprehensive Security**: JWT authentication, role-based access controls
 - **Observability**: OpenTelemetry integration for monitoring and tracing
+- **Web UI**: Modern React interface built with Material UI
+- **Mobile App**: Expo React Native client featuring stories, an endless feed, and an AI-powered Learn tab
 
 ## Tech Stack
 
@@ -46,6 +48,8 @@ lyo-backend/
 ├── docker-compose.yml        # Development environment setup
 ├── docker-compose.test.yml   # Testing environment setup
 ├── requirements.txt  # Python dependencies
+├── frontend/         # React web UI monolith
+├── mobile/           # Expo React Native app
 └── main.py           # Application entry point
 ```
 
@@ -87,6 +91,20 @@ lyo-backend/
 5. Run the application
    ```bash
    uvicorn main:app --reload
+   ```
+
+6. Start the web UI (requires Node 18+)
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+7. Start the mobile app (requires Expo CLI)
+   ```bash
+   cd mobile
+   npm install
+   expo start
    ```
 
 ### Docker Setup
